@@ -1,0 +1,335 @@
+@import "../../responsive.scss";
+
+.recipe {
+  display: flex;
+  min-height: calc(100vh - 100px);
+
+  @include sm {
+    display: block;
+    width: 100%;
+  }
+
+  .details {
+    flex: 3;
+
+    .wrapper {
+      padding-right: 50px;
+
+      @include sm {
+        padding: 0;
+      }
+
+      .top {
+        h1 {
+          font-size: 56px;
+          margin-bottom: 16px;
+        }
+
+        p {
+          margin: 16px 0;
+        }
+
+        img {
+          width: 100%;
+          border: 1px solid black;
+        }
+      }
+
+      .ingredients {
+        margin-bottom: 48px;
+
+        ul {
+          padding: 0px 20px;
+        }
+
+        li {
+          list-style-type: disc;
+          margin-bottom: 32px;
+
+          &::marker {
+            color: #fece51;
+          }
+        }
+        
+        h2 {
+          margin: 32px 0;
+        }
+      }
+
+      .steps {
+        margin-bottom: 48px;
+
+        li {
+          margin-bottom: 32px;
+
+          p {
+            line-height: 1.25rem;
+          }
+
+          &:before {
+            content: "Step " counter(step-counter) ": ";
+            counter-increment: step-counter;
+            font-weight: 700;
+            color: #fece51;
+            margin-bottom: 12px;
+            line-height: 3rem
+          }
+        }
+
+        ul {
+          list-style: none;
+          counter-reset: step-counter;
+        }
+
+        h2 {
+          margin: 32px 0;
+        }
+      }
+    }
+  }
+
+  .features {
+    flex: 2;
+    background-color: #fcf5f3;
+
+    @include md {
+      background-color: initial;
+    }
+
+    .wrapper {
+      padding: 0 20px;
+
+      @include sm {
+        padding: 0;
+      }
+
+      .informations {
+        margin-bottom: 32px;
+
+        @include sm {
+          margin-top: 20px;
+        }
+
+        h1 {
+          font-size: 24px;
+          margin-bottom: 8px;
+        }
+
+        .information-container {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 20px;
+          padding: 16px;
+          background-color: white;
+          border-radius: 8px;
+          border: 1px solid black;
+
+          @include md {
+            background-color: #fcf5f3;
+          }
+
+          .information {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+          }
+        }
+      }
+
+      .nutritions {
+        h1 {
+          font-size: 24px;
+          margin-bottom: 8px;
+
+          span {
+            font-size: 16px;
+            font-weight: 300;
+          }
+        }
+
+        .nutritions-container {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 20px;
+          padding: 16px;
+          background-color: white;
+          border-radius: 8px;
+          border: 1px solid black;
+
+          @include md {
+            background-color: #fcf5f3;
+          }
+
+          .nutrition {
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+.reviews {
+  width: 50%;
+  margin: 32px auto;
+
+  @include md {
+    width: 100%;
+  }
+
+  .leave-review {
+    margin-top: 24px;
+    border: 8px solid #fcf5f3;
+    padding: 24px;
+
+    .rating {
+      margin-top: 24px;
+
+      .star-rating {
+        display: inline-block;
+      }
+
+      .star-rating input[type="radio"] {
+        display: none;
+      }
+      
+      .star-rating label {
+        margin-top: -12px;
+        font-size: 4rem;
+        color: #ddd;
+        cursor: pointer;
+        float: right;
+
+        @include sm {
+          font-size: 3rem;
+        }
+      }
+      
+      .star-rating label:before {
+        content: "\2605";
+      }
+      
+      .star-rating input[type="radio"]:checked ~ label {
+        color: #fece51;
+      }
+
+      .star-rating input[type="radio"]:hover ~ label {
+        color: #fece51;
+      }
+      
+      .star-rating input[type="radio"]:checked ~ label:before {
+        content: "\2605";
+      }
+    }
+
+    .review {
+      margin-top: 12px;
+
+      .review-form {
+
+        textarea {
+          width: 100%;
+          height: 200px;
+          padding: 12px;
+          border: 1px solid rgba(0, 0, 0, 0.25);
+          border-radius: 0;
+          margin-top: 8px;
+          font-size: 20px;
+
+          &:focus {
+            outline: 2px solid #fece51;
+          }
+        }
+
+        .action-buttons {
+          display: flex;
+          gap: 8px;
+          justify-content: flex-end;
+
+          button {
+            margin-top: 24px;
+            padding: 12px 24px;
+            cursor: pointer;
+            line-height: 1.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .0625rem;
+            font-size: 0.875rem;
+          }
+
+          .cancel {
+            background-color: transparent;
+            border: transparent;
+
+            &:hover {
+              text-decoration: underline;
+              text-underline-offset: 3px;
+            }
+          }
+
+          .submit {
+            background-color: #fece51;
+            border: transparent;
+
+            &:hover {
+              background-color: #d6ad43;
+              color: white;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .comments {
+    margin-top: 24px;
+
+    .review-data {
+      border: 1px solid rgba(0, 0, 0, 0.25);
+      border-left: transparent;
+      border-right: transparent;
+      padding: 12px 0;
+      font-size: 14px;
+      width: 100%;
+    }
+
+    .feedback-container {
+      margin-top: 12px;
+
+      .feedback {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+        padding: 20px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .feedback-user {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          .feedback-user-image {
+            width: 40px;
+            height: auto;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border: 1px solid rgba(0, 0, 0, 0.25);
+            border-radius: 50%;
+          }
+        }
+
+        .feedback-rating {
+          display: flex;
+          align-items: center;
+
+          .feedback-created {
+            margin-left: 16px;
+            font-size: 12px;
+            color: gray;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,104 @@
+@import "../../responsive.scss";
+
+.profile {
+  display: flex;
+  min-height: calc(100vh - 100px);
+  //height: 100%;
+
+  @include sm {
+    flex-direction: column;
+  }
+
+  .details {
+    flex: 3;
+
+    .wrapper {
+      padding-right: 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+
+      @include sm {
+        padding: 0px 20px;
+      }
+
+      .title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h1 {
+          font-weight: 300;
+        }
+
+        button {
+          padding: 12px 24px;
+          background-color: #fece51;
+          cursor: pointer;
+          border: none;
+        }
+      }
+
+      .info {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        span {
+          display: flex;
+          align-items: center;
+          gap: 20px
+        }
+
+        img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+
+      .recipe-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+    }
+  }
+
+  .saved-recipes-container {
+    flex: 2;
+    background-color: #fcf5f3;
+    min-height: 100%;
+    
+    @include md {
+      background-color: initial;
+    }
+    
+    @include sm {
+      margin-top: 50px;
+    }
+
+    .wrapper {
+      padding: 0px 20px;
+
+      .title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h1 {
+          font-weight: 300;
+          margin-bottom: 50px;
+        }
+      }
+
+      .recipe-list {
+
+        .card:last-child {
+          margin-bottom: 32px;
+        }
+      }
+    }
+  }
+}
