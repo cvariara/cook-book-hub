@@ -17,7 +17,8 @@ const Profile = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+  
   return (
     <div className="profile">
       <div className="details">
@@ -28,7 +29,11 @@ const Profile = () => {
           </div>
           <div className="info">
             <span>
-              Avatar: <img src={currentUser.avatar || "/default.jpg"} alt="User avatar" />
+              Avatar:{" "}
+              <img
+                src={currentUser.avatar || "/default.jpg"}
+                alt="User avatar"
+              />
             </span>
             <span>
               Username: <b>{currentUser.username}</b>

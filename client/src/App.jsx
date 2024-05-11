@@ -1,7 +1,7 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Layout from "./pages/layout/Layout";
+import { Layout, RequireAuth } from "./pages/layout/Layout";
 import Home from "./pages/home/Home";
 import Recipes from "./pages/recipes/Recipes";
 import Recipe from "./pages/recipe/Recipe";
@@ -28,16 +28,22 @@ const App = () => {
           element: <Recipe />,
         },
         {
-          path: "/profile",
-          element: <Profile />,
-        },
-        {
           path: "/login",
           element: <Login />,
         },
         {
           path: "/signup",
           element: <Signup />,
+        },
+      ],
+    },
+    {
+      path: "/",
+      element: <RequireAuth />,
+      children: [
+        {
+          path: "/profile",
+          element: <Profile />,
         },
       ],
     },
