@@ -1,21 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./footer.scss";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 const Footer = () => {
-  const user = true;
+  const { currentUser } = useContext(AuthContext);
 
   return (
     <footer className="footer">
       <div className="tabs">
         <Link to="/">Home</Link>
         <Link to="/recipes">Recipes</Link>
-        {user ? (
+        {currentUser ? (
           <Link to="/profile">Profile</Link>
         ) : (
           <>
-            <a href="/">Sign in</a>
-            <a href="/">Sign up</a>
+            <Link to="/login">Sign in</Link>
+            <Link to="/signup">Sign up</Link>
           </>
         )}
       </div>

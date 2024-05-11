@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./profile.scss";
 import RecipeList from "../../components/recipeList/RecipeList";
 import apiRequest from "../../lib/apiRequest";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 const Profile = () => {
+  const { updateUser, currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      const response = apiRequest.post("/auth/logout");
-      localStorage.removeItem("user");
+      await apiRequest.post("/auth/logout");
+      updateUser(null);
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -26,13 +28,13 @@ const Profile = () => {
           </div>
           <div className="info">
             <span>
-              Avatar: <img src="/default.jpg" alt="" />
+              Avatar: <img src={currentUser.avatar || "/default.jpg"} alt="User avatar" />
             </span>
             <span>
-              Username: <b>John Doe</b>
+              Username: <b>{currentUser.username}</b>
             </span>
             <span>
-              Email: <b>john@gmail.com</b>
+              Email: <b>{currentUser.email}</b>
             </span>
             <button onClick={handleLogout}>Logout</button>
           </div>
