@@ -1,3 +1,5 @@
+@import "../../responsive.scss";
+
 .signup {
   min-height: calc(100vh - 100px);
   display: flex;
@@ -53,6 +55,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @include md {
+      background-color: initial;
+      display: none;
+    }
+
     img {
       width: 100%;
     }

@@ -1,8 +1,21 @@
 import React from "react";
 import "./profile.scss";
 import RecipeList from "../../components/recipeList/RecipeList";
+import apiRequest from "../../lib/apiRequest";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const response = apiRequest.post("/auth/logout");
+      localStorage.removeItem("user");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <div className="profile">
       <div className="details">
@@ -21,6 +34,7 @@ const Profile = () => {
             <span>
               Email: <b>john@gmail.com</b>
             </span>
+            <button onClick={handleLogout}>Logout</button>
           </div>
           <div className="title">
             <h1>My Recipes</h1>
