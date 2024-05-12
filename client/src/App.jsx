@@ -8,6 +8,7 @@ import Recipe from "./pages/recipe/Recipe";
 import Profile from "./pages/profile/Profile";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
+import Settings from "./pages/settings/Settings";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -45,6 +46,10 @@ const App = () => {
           path: "/profile",
           element: <Profile />,
         },
+        {
+          path: "/profile/settings",
+          element: <Settings />
+        }
       ],
     },
   ]);

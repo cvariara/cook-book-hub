@@ -6,6 +6,7 @@ import cors from "cors";
 import recipeRoute from "./routes/recipe.js";
 import authRoute from "./routes/auth.js";
 import testRoute from "./routes/test.js";
+import userRoute from "./routes/user.js";
 
 const app = express();
 const PORT = 4000;
@@ -21,6 +22,7 @@ app.use(cookieParser());
 app.use("/api/recipes", recipeRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/test", testRoute);
+app.use("/api/users", userRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}!`);

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import "./profile.scss";
 import RecipeList from "../../components/recipeList/RecipeList";
 import apiRequest from "../../lib/apiRequest";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
 const Profile = () => {
@@ -25,7 +25,9 @@ const Profile = () => {
         <div className="wrapper">
           <div className="title">
             <h1>User Information</h1>
-            <button>Update Profile</button>
+            <Link to="/profile/settings">
+              <button>Update Profile</button>
+            </Link>
           </div>
           <div className="info">
             <span>
