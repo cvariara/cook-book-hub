@@ -10,6 +10,10 @@
   .featured-recipe {
     height: 800px;
 
+    @include md {
+      height: 500px;
+    }
+
     @include sm {
       height: 300px;
     }
@@ -31,6 +35,10 @@
           height: 650px;
           background-color: gray;
 
+          @include md {
+            height: 400px;
+          }
+
           @include sm {
             height: 200px;
           }
@@ -41,6 +49,10 @@
             //aspect-ratio:2.5/1;
             height: 100%;
             object-fit: contain;
+
+            @include lg {
+              object-fit: cover;
+            }
           }
         }
     
