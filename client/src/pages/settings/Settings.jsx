@@ -69,7 +69,7 @@ const Settings = () => {
       <div className="side-container">
         <img
           src={avatar || currentUser.avatar || "/default.jpg"}
-          alt=""
+          alt="User's avatar"
           className="avatar"
         />
         <UploadWidget

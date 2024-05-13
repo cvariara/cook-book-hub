@@ -9,6 +9,7 @@ import Profile from "./pages/profile/Profile";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
 import Settings from "./pages/settings/Settings";
+import NewRecipe from "./pages/newRecipe/NewRecipe";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -49,6 +50,10 @@ const App = () => {
         {
           path: "/profile/settings",
           element: <Settings />
+        },
+        {
+          path: "/add",
+          element: <NewRecipe />
         }
       ],
     },

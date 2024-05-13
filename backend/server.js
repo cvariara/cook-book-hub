@@ -19,10 +19,10 @@ app.use(express.json());
 app.use(cookieParser());
 
 // routes
-app.use("/api/recipes", recipeRoute);
 app.use("/api/auth", authRoute);
-app.use("/api/test", testRoute);
 app.use("/api/users", userRoute);
+app.use("/api/recipes", recipeRoute);
+app.use("/api/test", testRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}!`);

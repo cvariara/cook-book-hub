@@ -47,7 +47,9 @@ const Profile = () => {
           </div>
           <div className="title">
             <h1>My Recipes</h1>
-            <button>Create New Recipe</button>
+            <Link to="/add">
+              <button>Create New Recipe</button>
+            </Link>
           </div>
           <RecipeList />
         </div>
