@@ -1,7 +1,7 @@
 import React from "react";
 import "./hero.scss";
 
-const Hero = () => {
+const Hero = ({ numOfRecipes }) => {
   return (
     <div className="hero">
       <div className="text-container">
@@ -15,16 +15,16 @@ const Hero = () => {
           </p>
           <div className="boxes">
             <div className="box">
-              <h1>100+</h1>
+              <h1>{numOfRecipes}+</h1>
               <h2>Recipes</h2>
             </div>
             <div className="box">
-              <h1>100+</h1>
-              <h2>Recipes</h2>
+              <h1>200+</h1>
+              <h2>Users</h2>
             </div>
             <div className="box">
-              <h1>100+</h1>
-              <h2>Recipes</h2>
+              <h1>2+</h1>
+              <h2>Years of Experience</h2>
             </div>
           </div>
         </div>

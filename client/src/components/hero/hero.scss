@@ -48,6 +48,12 @@
           font-size: 20px;
           font-weight: 300;
         }
+
+        .box {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
       }
     }
   }

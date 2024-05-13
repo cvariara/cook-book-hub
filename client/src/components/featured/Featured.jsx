@@ -3,8 +3,8 @@ import "./featured.scss";
 import { recipeData } from "../../lib/data";
 import { Link } from "react-router-dom";
 
-const Featured = () => {
-  const recipe = recipeData[1];
+const Featured = ({ featuredRecipe }) => {
+  const recipe = featuredRecipe || recipeData[0];
   const reviews = recipe.reviews;
 
   let totalRating = 0;
@@ -32,7 +32,7 @@ const Featured = () => {
           <div className="text-container">
             <h1>{recipe.name}</h1>
             <p>
-              {averageRating} stars | {totalReviews} reviews
+            {Number(averageRating) ? averageRating + "stars | " : ""} {totalReviews} reviews
             </p>
           </div>
         </div>

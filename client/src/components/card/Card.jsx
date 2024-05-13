@@ -26,7 +26,9 @@ const Card = ({ recipe }) => {
       </div>
       <div className="text-container">
         <h1>{recipe.name}</h1>
-        <p>{averageRating} stars | {totalReviews} reviews</p>
+        <p>
+          {Number(averageRating) ? averageRating + "stars | " : ""} {totalReviews} reviews
+        </p>
       </div>
     </div>
   )
