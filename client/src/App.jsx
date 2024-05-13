@@ -10,6 +10,7 @@ import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
 import Settings from "./pages/settings/Settings";
 import NewRecipe from "./pages/newRecipe/NewRecipe";
+import { singlePageLoader } from "./lib/loaders";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -28,6 +29,7 @@ const App = () => {
         {
           path: "/recipes/:id",
           element: <Recipe />,
+          loader: singlePageLoader,
         },
         {
           path: "/login",

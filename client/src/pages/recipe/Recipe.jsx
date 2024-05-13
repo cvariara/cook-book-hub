@@ -1,11 +1,13 @@
 import React from "react";
 import "./recipe.scss";
-import { singleRecipeData } from "../../lib/data";
 import StarRating from "../../components/starRating/StarRating";
+import { useLoaderData } from "react-router-dom";
 
 const Recipe = () => {
-  const recipe = singleRecipeData;
-  const information = recipe.information;
+  const recipe = useLoaderData();
+  console.log(recipe)
+
+  const information = recipe.recipeInfo;
   const reviews = recipe.reviews;
 
   let totalRating = 0;
@@ -16,7 +18,6 @@ const Recipe = () => {
   }
 
   const averageRating = (totalRating / totalReviews).toFixed(1);
-  //console.log(recipe);
 
   return (
     <>
@@ -26,7 +27,7 @@ const Recipe = () => {
             <div className="top">
               <h1>{recipe.name}</h1>
               <p>
-                {averageRating} stars | {totalReviews} reviews
+                {Number(averageRating) ? averageRating + "stars | " : ""} {totalReviews} reviews
               </p>
               <p>{information.description}</p>
               <img src={recipe.img} alt="" />
@@ -70,7 +71,7 @@ const Recipe = () => {
                 </div>
                 <div className="information">
                   <h3>Total Time:</h3>
-                  <span>{information.totalTime} Mins</span>
+                  <span>{information.prepTime + information.cookTime} Mins</span>
                 </div>
               </div>
             </div>
@@ -80,19 +81,19 @@ const Recipe = () => {
               </h1>
               <div className="nutritions-container">
                 <div className="nutrition">
-                  <h3>{information.nuritionPerServing.calories}</h3>
+                  <h3>{information.calories}</h3>
                   <span>Calories</span>
                 </div>
                 <div className="nutrition">
-                  <h3>{information.nuritionPerServing.fat}g</h3>
+                  <h3>{information.fat}g</h3>
                   <span>Fat</span>
                 </div>
                 <div className="nutrition">
-                  <h3>{information.nuritionPerServing.carbs}g</h3>
+                  <h3>{information.carbs}g</h3>
                   <span>Carbs</span>
                 </div>
                 <div className="nutrition">
-                  <h3>{information.nuritionPerServing.protein}g</h3>
+                  <h3>{information.protein}g</h3>
                   <span>Protein</span>
                 </div>
               </div>
