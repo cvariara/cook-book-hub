@@ -125,15 +125,17 @@ const Recipe = () => {
               <label htmlFor="review">
                 <h4>Your Review</h4>
               </label>
-              <textarea
-                name="review"
-                id="review"
-                placeholder="What did you think about this recipe?"
-              ></textarea>
-              <div className="action-buttons">
-                <button className="cancel">Cancel</button>
-                <button className="submit">Submit</button>
-              </div>
+              <form action="">
+                <textarea
+                  name="review"
+                  id="review"
+                  placeholder="What did you think about this recipe?"
+                ></textarea>
+                <div className="action-buttons">
+                  <button className="cancel">Cancel</button>
+                  <button className="submit">Submit</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

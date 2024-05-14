@@ -1,12 +1,22 @@
 import prisma from "../lib/prisma.js";
 
 export const getRecipes = async (req, res) => {
+  const query = req.query;
+
   try {
     const recipes = await prisma.recipe.findMany({
+      where: {
+        name: {
+          mode: "insensitive",
+          contains: query.item || undefined,
+        },
+      },
       include: {
         reviews: true,
       },
     });
+    //console.log(recipes);
+
     res.status(200).json(recipes);
   } catch (error) {
     console.log(error);

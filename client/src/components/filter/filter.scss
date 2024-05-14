@@ -23,24 +23,32 @@
     }
 
     .item {
-      width: 100%;
-      display: flex;
+      form {
+        width: 100%;
+        display: flex;
+        gap: 8px;
+  
+        input {
+          min-height: 40px;
+          width: 90%;
+          padding: 12px;
+        }
+        
+        a {
+          min-height: 40px;
 
-      input {
-        min-height: 40px;
-        width: 90%;
-        padding: 12px;
-      }
-
-      button {
-        min-width: 40px;
-        width: 10%;
-        background-color: #fece51;
-        border: 1px solid #fece51;
-        cursor: pointer;
-
-        img {
-          width: 20px;
+          button {
+            min-width: 40px;
+            width: 10%;
+            height: 100%;
+            background-color: #fece51;
+            border: 1px solid #fece51;
+            cursor: pointer;
+    
+            img {
+              width: 20px;
+            }
+          }
         }
       }
     }
