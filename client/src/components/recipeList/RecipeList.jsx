@@ -1,17 +1,15 @@
 import React from "react";
 import "./recipeList.scss";
-import { recipeData } from "../../lib/data";
 import Card from "../card/Card";
 
-console.log(recipeData.length);
-
-const RecipeList = () => {
+const RecipeList = ({ recipes }) => {
+  //console.log(recipes)
   return (
     <div className="recipe-list">
-      {recipeData.length === 0 ? (
+      {!recipes.length ? (
         <span>There are no recipes.</span>
       ) : (
-        recipeData.map((recipe) => <Card key={recipe.id} recipe={recipe} />)
+        recipes.map((recipe) => <Card key={recipe.id} recipe={recipe} />)
       )}
     </div>
   );

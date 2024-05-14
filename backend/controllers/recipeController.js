@@ -1,4 +1,5 @@
 import prisma from "../lib/prisma.js";
+import jwt from "jsonwebtoken";
 
 export const getRecipes = async (req, res) => {
   const query = req.query;
@@ -42,7 +43,32 @@ export const getRecipe = async (req, res) => {
       },
     });
 
-    res.status(200).json(recipe);
+    let userId;
+
+    const token = req.cookies?.token;
+
+    if (!token) {
+      userId = null;
+    } else {
+      jwt.verify(token, process.env.JWT_SECRET, async (error, payload) => {
+        if (error) {
+          userId = null;
+        } else {
+          userId = payload.id;
+        }
+      });
+    }
+
+    const saved = await prisma.savedRecipe.findUnique({
+      where: {
+        userId_recipeId: {
+          recipeId: id,
+          userId,
+        },
+      },
+    });
+
+    res.status(200).json({ ...recipe, isSaved: saved ? true : false });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Failed to get recipe" });

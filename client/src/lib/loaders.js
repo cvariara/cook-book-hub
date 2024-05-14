@@ -23,3 +23,10 @@ export const allUsersLoader = async ({ request }) => {
   const response = await apiRequest("/users/");
   return response.data;
 };
+
+export const profilePageLoader = async () => {
+  const recipePromise = await apiRequest("/users/profileRecipes");
+  return defer({
+    recipeResponse: recipePromise,
+  });
+};

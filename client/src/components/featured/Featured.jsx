@@ -1,6 +1,5 @@
 import React from "react";
 import "./featured.scss";
-import { recipeData } from "../../lib/data";
 import { Link } from "react-router-dom";
 
 const Featured = ({ featuredRecipe }) => {
@@ -25,9 +24,6 @@ const Featured = ({ featuredRecipe }) => {
             <Link to={`/recipes/${recipe.id}`} className="img-container">
               <img src={recipe.img} alt={recipe.name} />
             </Link>
-            <button className="save">
-              <img src="/save.png" alt="" />
-            </button>
           </div>
           <div className="text-container">
             <h1>{recipe.name}</h1>

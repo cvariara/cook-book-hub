@@ -12,7 +12,7 @@ const Home = () => {
 
   const numOfRecipes = recipes.length;
 
-  const featuredRecipe = recipes[Math.floor(Math.random() * 2)];
+  const featuredRecipe = recipes[Math.floor(Math.random() * recipes.length)];
 
   //console.log(recipes)
   //console.log(featuredRecipe)

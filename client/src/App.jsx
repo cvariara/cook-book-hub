@@ -10,7 +10,13 @@ import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
 import Settings from "./pages/settings/Settings";
 import NewRecipe from "./pages/newRecipe/NewRecipe";
-import { allRecipesLoader, recipesPageLoader, singlePageLoader } from "./lib/loaders";
+import {
+  allRecipesLoader,
+  profilePageLoader,
+  recipesPageLoader,
+  singlePageLoader,
+} from "./lib/loaders";
+import ScrollToTop from "./components/ScrollToTop";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -50,20 +56,26 @@ const App = () => {
         {
           path: "/profile",
           element: <Profile />,
+          loader: profilePageLoader,
         },
         {
           path: "/profile/settings",
-          element: <Settings />
+          element: <Settings />,
         },
         {
           path: "/add",
-          element: <NewRecipe />
-        }
+          element: <NewRecipe />,
+        },
       ],
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <RouterProvider router={router}>
+      <ScrollToTop />
+    </RouterProvider>
+  );
+  //return <RouterProvider router={router} />;
 };
 
 export default App;

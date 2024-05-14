@@ -89,3 +89,77 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ error: "Failed to delete user!" });
   }
 };
+
+export const saveRecipe = async (req, res) => {
+  const recipeId = req.body.recipeId;
+  const tokenUserId = req.userId;
+
+  try {
+    const savedRecipe = await prisma.savedRecipe.findUnique({
+      where: {
+        userId_recipeId: {
+          userId: tokenUserId,
+          recipeId,
+        },
+      },
+    });
+
+    if (savedRecipe) {
+      await prisma.savedRecipe.delete({
+        where: {
+          id: savedRecipe.id,
+        },
+      });
+      res.status(200).json({ message: "Recipe removed from saved list" });
+    } else {
+      await prisma.savedRecipe.create({
+        data: {
+          userId: tokenUserId,
+          recipeId,
+        },
+      });
+      res.status(200).json({ message: "Recipe saved" });
+    }
+
+    //res.status(200).json({ message: "User deleted!" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Failed to delete user!" });
+  }
+};
+
+export const profileRecipes = async (req, res) => {
+  const tokenUserId = req.params.userId;
+
+  try {
+    const userRecipes = await prisma.recipe.findMany({
+      where: {
+        userId: tokenUserId,
+      },
+      include: {
+        reviews: true,
+      },
+    });
+
+    
+    const saved = await prisma.savedRecipe.findMany({
+      where: {
+        userId: tokenUserId,
+      },
+      include: {
+        recipe: {
+          include: {
+            reviews: true,
+          },
+        },
+      },
+    });
+
+    const savedRecipes = saved.map((item) => item.recipe);
+
+    res.status(200).json({ userRecipes, savedRecipes });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Failed to get profile recipes!" });
+  }
+};

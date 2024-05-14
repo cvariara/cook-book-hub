@@ -91,6 +91,7 @@
 
     .wrapper {
       padding: 0px 20px;
+      width: 100%;
 
       .title {
         display: flex;
@@ -104,6 +105,10 @@
       }
 
       .recipe-list {
+
+        .card {
+          width: 100%;
+        }
 
         .card:last-child {
           margin-bottom: 32px;

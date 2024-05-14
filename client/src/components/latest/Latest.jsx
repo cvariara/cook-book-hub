@@ -1,6 +1,5 @@
 import React from "react";
 import "./latest.scss";
-import { recipeData } from "../../lib/data";
 import Card from "../card/Card";
 
 const Latest = ({ recipes }) => {

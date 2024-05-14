@@ -166,6 +166,23 @@
           }
         }
       }
+
+      button {
+        margin-top: 24px;
+        padding: 20px;
+        display: flex;
+        align-items: fle; 
+        gap: 5px;
+        background-color: white;
+        border: 1px solid #fece51;
+        border-radius: 5px;
+        cursor: pointer;
+
+        img {
+          width: 16px;
+          height: 16px;
+        }
+      }
     }
   }
 }

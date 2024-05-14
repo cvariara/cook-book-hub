@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
+import React, { Suspense, useContext } from "react";
 import "./profile.scss";
 import RecipeList from "../../components/recipeList/RecipeList";
 import apiRequest from "../../lib/apiRequest";
-import { Link, useNavigate } from "react-router-dom";
+import { Await, Link, useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
 const Profile = () => {
+  const recipes = useLoaderData();
   const { updateUser, currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -18,7 +19,7 @@ const Profile = () => {
       console.log(error);
     }
   };
-  
+
   return (
     <div className="profile">
       <div className="details">
@@ -51,7 +52,18 @@ const Profile = () => {
               <button>Create New Recipe</button>
             </Link>
           </div>
-          <RecipeList />
+          <Suspense fallback={<p>Loading...</p>}>
+            <div className="wrapper">
+              <Await
+                resolve={recipes.recipeResponse}
+                errorElement={<p>Error loading recipes!</p>}
+              >
+                {(recipeResponse) => (
+                  <RecipeList recipes={recipeResponse.data.userRecipes} />
+                )}
+              </Await>
+            </div>
+          </Suspense>
         </div>
       </div>
       <div className="saved-recipes-container">
@@ -59,7 +71,18 @@ const Profile = () => {
           <div className="title">
             <h1>Saved Recipes</h1>
           </div>
-          <RecipeList />
+          <Suspense fallback={<p>Loading...</p>}>
+            <div className="wrapper">
+              <Await
+                resolve={recipes.recipeResponse}
+                errorElement={<p>Error loading recipes!</p>}
+              >
+                {(recipeResponse) => (
+                  <RecipeList recipes={recipeResponse.data.savedRecipes} />
+                )}
+              </Await>
+            </div>
+          </Suspense>
         </div>
       </div>
     </div>

@@ -8,6 +8,8 @@
   height: 300px;
   border: 1px solid rgba(0, 0, 0, .15);
   position: relative;
+  background-color: white;
+  width: 100%;
 
   @include md {
     min-width: 100px;
@@ -50,7 +52,12 @@
 
 
   .text-container {
+    height: 100%;
     padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
     h1 {
       font-size: 24px;
     }

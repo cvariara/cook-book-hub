@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react";
 import "./card.scss";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const Card = ({ recipe }) => {
   const reviews = recipe.reviews;
@@ -15,23 +15,21 @@ const Card = ({ recipe }) => {
   const averageRating = (totalRating / totalReviews).toFixed(1);
 
   return (
-    <div className='card'>
+    <div className="card">
       <div className="top">
-        <Link to={`/recipes/${recipe.id}`} className='img-container' >
+        <Link to={`/recipes/${recipe.id}`} className="img-container">
           <img src={recipe.img} alt={recipe.name} />
         </Link>
-        <button className="save">
-          <img src="/save.png" alt="" />
-        </button>
       </div>
       <div className="text-container">
         <h1>{recipe.name}</h1>
         <p>
-          {Number(averageRating) ? averageRating + " stars | " : ""} {totalReviews} reviews
+          {Number(averageRating) ? averageRating + " stars | " : ""}{" "}
+          {totalReviews} reviews
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Card
+export default Card;

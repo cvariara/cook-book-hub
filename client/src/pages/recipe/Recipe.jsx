@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import "./recipe.scss";
 import StarRating from "../../components/starRating/StarRating";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import apiRequest from "../../lib/apiRequest.js";
 
 const Recipe = () => {
   const recipe = useLoaderData();
-  console.log(recipe)
+  const [saved, setSaved] = useState(recipe.isSaved);
+  const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  console.log(recipe);
 
   const information = recipe.recipeInfo;
   const reviews = recipe.reviews;
@@ -19,6 +24,22 @@ const Recipe = () => {
 
   const averageRating = (totalRating / totalReviews).toFixed(1);
 
+  const handleSave = async () => {
+    // After React 19, update to useOptimistic hook
+    setSaved((prev) => !prev);
+    if (!currentUser) {
+      navigate("/login");
+    }
+
+    try {
+      await apiRequest.post("/users/save", {
+        recipeId: recipe.id,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div className="recipe">
@@ -27,7 +48,8 @@ const Recipe = () => {
             <div className="top">
               <h1>{recipe.name}</h1>
               <p>
-                {Number(averageRating) ? averageRating + "stars | " : ""} {totalReviews} reviews
+                {Number(averageRating) ? averageRating + "stars | " : ""}{" "}
+                {totalReviews} reviews
               </p>
               <p>{information.description}</p>
               <img src={recipe.img} alt="" />
@@ -71,7 +93,9 @@ const Recipe = () => {
                 </div>
                 <div className="information">
                   <h3>Total Time:</h3>
-                  <span>{information.prepTime + information.cookTime} Mins</span>
+                  <span>
+                    {information.prepTime + information.cookTime} Mins
+                  </span>
                 </div>
               </div>
             </div>
@@ -98,6 +122,13 @@ const Recipe = () => {
                 </div>
               </div>
             </div>
+            <button
+              onClick={handleSave}
+              style={{ backgroundColor: saved ? "#fece51" : "white" }}
+            >
+              <img src="/save.png" alt="Save recipe button" />
+              {saved ? "Recipe Saved" : "Save this Recipe"}
+            </button>
           </div>
         </div>
       </div>
