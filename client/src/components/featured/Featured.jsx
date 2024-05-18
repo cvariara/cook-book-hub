@@ -28,7 +28,7 @@ const Featured = ({ featuredRecipe }) => {
           <div className="text-container">
             <h1>{recipe.name}</h1>
             <p>
-            {Number(averageRating) ? averageRating + "stars | " : ""} {totalReviews} reviews
+            {Number(averageRating) ? averageRating + " stars | " : ""} {totalReviews} reviews
             </p>
           </div>
         </div>

@@ -80,13 +80,13 @@ const NewRecipe = () => {
             </div>
             <div className="item">
               <label htmlFor="prepTime">
-                Prep Time <span className="required">*</span>
+                Prep Time (min) <span className="required">*</span>
               </label>
               <input min={1} id="prepTime" name="prepTime" type="number" />
             </div>
             <div className="item">
               <label htmlFor="cookTime">
-                Cook Time <span className="required">*</span>
+                Cook Time (min) <span className="required">*</span>
               </label>
               <input min={1} id="cookTime" name="cookTime" type="number" />
             </div>
@@ -95,15 +95,15 @@ const NewRecipe = () => {
               <input min={1} id="calories" name="calories" type="number" />
             </div>
             <div className="item">
-              <label htmlFor="fat">Fat</label>
+              <label htmlFor="fat">Fat (g)</label>
               <input min={1} id="fat" name="fat" type="number" />
             </div>
             <div className="item">
-              <label htmlFor="carbs">Carbs</label>
+              <label htmlFor="carbs">Carbs (g)</label>
               <input min={1} id="carbs" name="carbs" type="number" />
             </div>
             <div className="item">
-              <label htmlFor="protein">Protein</label>
+              <label htmlFor="protein">Protein (g)</label>
               <input min={1} id="protein" name="protein" type="number" />
             </div>
             <div className="ingredients">
@@ -152,6 +152,7 @@ const NewRecipe = () => {
         </div>
       </div>
       <div className="side-container">
+        <h2>Image:</h2>
         {image && <img src={image} alt="" />}
         <UploadWidget
           uwConfig={{

@@ -20,6 +20,8 @@ const Profile = () => {
     }
   };
 
+  console.log(recipes.recipeResponse.data.userRecipes)
+
   return (
     <div className="profile">
       <div className="details">

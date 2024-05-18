@@ -6,6 +6,7 @@ import {
   getRecipe,
   getRecipes,
   updateRecipe,
+  addRecipeReview
 } from "../controllers/recipeController.js";
 
 const router = Router();
@@ -19,5 +20,7 @@ router.post("/", verifyToken, addRecipe);
 router.put("/:id", verifyToken, updateRecipe);
 
 router.delete("/:id", verifyToken, deleteRecipe);
+
+router.post("/:id/addReview", verifyToken, addRecipeReview);
 
 export default router;

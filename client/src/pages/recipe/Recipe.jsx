@@ -7,13 +7,13 @@ import apiRequest from "../../lib/apiRequest.js";
 
 const Recipe = () => {
   const recipe = useLoaderData();
+  const information = recipe.recipeInfo;
+  const reviews = recipe.reviews;
   const [saved, setSaved] = useState(recipe.isSaved);
+  const [error, setError] = useState("");
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
   console.log(recipe);
-
-  const information = recipe.recipeInfo;
-  const reviews = recipe.reviews;
 
   let totalRating = 0;
   let totalReviews = reviews.length;
@@ -23,6 +23,14 @@ const Recipe = () => {
   }
 
   const averageRating = (totalRating / totalReviews).toFixed(1);
+
+  // Convert createdAt to readable time
+  const date = new Date(recipe.createdAt);
+  const formattedDate = date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   const handleSave = async () => {
     // After React 19, update to useOptimistic hook
@@ -40,6 +48,38 @@ const Recipe = () => {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    const formData = new FormData(e.target);
+    const inputs = Object.fromEntries(formData);
+
+    try {
+      const response = await apiRequest.post(
+        `/recipes/${recipe.id}/addReview`,
+        {
+          rating: parseInt(inputs.rating),
+          comment: inputs.review,
+        }
+      );
+
+      window.location.reload();
+
+    } catch (error) {
+      console.log(error);
+      setError(error.response.data.error);
+    }
+  };
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+
+    window.location.reload();
+
+    console.log("cancelled!");
+  };
+
   return (
     <>
       <div className="recipe">
@@ -47,11 +87,17 @@ const Recipe = () => {
           <div className="wrapper">
             <div className="top">
               <h1>{recipe.name}</h1>
-              <p>
-                {Number(averageRating) ? averageRating + "stars | " : ""}{" "}
-                {totalReviews} reviews
-              </p>
+              <a href="#reviews">
+                <p>
+                  {Number(averageRating) ? averageRating + " stars | " : ""}{" "}
+                  {totalReviews} reviews
+                </p>
+              </a>
               <p>{information.description}</p>
+              <p className="recipe-user">
+                By <span>{recipe.user.username}</span> | Updated on{" "}
+                {formattedDate}
+              </p>
               <img src={recipe.img} alt="" />
             </div>
             <div className="ingredients">
@@ -132,44 +178,50 @@ const Recipe = () => {
           </div>
         </div>
       </div>
-      <div className="reviews">
+      <div className="reviews" id="reviews">
         <h1>Reviews</h1>
-        <div className="leave-review">
-          <h3>{recipe.name}</h3>
-          <div className="rating">
-            <h4>Your Rating</h4>
-            <div className="star-rating">
-              <input type="radio" id="star1" name="rating" value="1" />
-              <label htmlFor="star1"></label>
-              <input type="radio" id="star2" name="rating" value="2" />
-              <label htmlFor="star2"></label>
-              <input type="radio" id="star3" name="rating" value="3" />
-              <label htmlFor="star3"></label>
-              <input type="radio" id="star4" name="rating" value="4" />
-              <label htmlFor="star4"></label>
-              <input type="radio" id="star5" name="rating" value="5" />
-              <label htmlFor="star5"></label>
-            </div>
-          </div>
-          <div className="review">
-            <div className="review-form">
-              <label htmlFor="review">
-                <h4>Your Review</h4>
-              </label>
-              <form action="">
-                <textarea
-                  name="review"
-                  id="review"
-                  placeholder="What did you think about this recipe?"
-                ></textarea>
-                <div className="action-buttons">
-                  <button className="cancel">Cancel</button>
-                  <button className="submit">Submit</button>
+        {currentUser.id !== recipe.userId &&
+          !reviews.some((review) => review.userId === currentUser.id) && (
+            <div className="leave-review">
+              <h3>{recipe.name}</h3>
+              <form onSubmit={handleSubmit}>
+                <div className="rating">
+                  <h4>Your Rating</h4>
+                  <div className="star-rating">
+                    <input type="radio" id="star1" name="rating" value="5" />
+                    <label htmlFor="star1"></label>
+                    <input type="radio" id="star2" name="rating" value="4" />
+                    <label htmlFor="star2"></label>
+                    <input type="radio" id="star3" name="rating" value="3" />
+                    <label htmlFor="star3"></label>
+                    <input type="radio" id="star4" name="rating" value="2" />
+                    <label htmlFor="star4"></label>
+                    <input type="radio" id="star5" name="rating" value="1" />
+                    <label htmlFor="star5"></label>
+                  </div>
+                </div>
+                <div className="review">
+                  <div className="review-form">
+                    <label htmlFor="review">
+                      <h4>Your Review</h4>
+                    </label>
+                    <textarea
+                      name="review"
+                      id="review"
+                      placeholder="What did you think about this recipe?"
+                    ></textarea>
+                    <div className="action-buttons">
+                      <button className="cancel" onClick={handleCancel}>
+                        Cancel
+                      </button>
+                      <button className="submit">Submit</button>
+                    </div>
+                  </div>
                 </div>
               </form>
+              {error && <span className="error">{error}</span>}
             </div>
-          </div>
-        </div>
+          )}
         <div className="comments">
           <div className="review-data">
             <span>{totalReviews} Reviews</span>
@@ -179,11 +231,13 @@ const Recipe = () => {
               <div key={index} className="feedback">
                 <div className="feedback-user">
                   <img
-                    src="/default.jpg"
+                    src={review.user.avatar || "/default.jpg"}
                     alt=""
                     className="feedback-user-image"
                   />
-                  <div className="feedback-user-name">{review.user}</div>
+                  <div className="feedback-user-name">
+                    {review.user.username}
+                  </div>
                 </div>
                 <div className="feedback-rating">
                   <StarRating rating={review.rating} />

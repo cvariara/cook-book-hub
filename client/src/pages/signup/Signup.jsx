@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import apiRequest from "../../lib/apiRequest.js";
 import { Link, useNavigate } from "react-router-dom";
 import "./signup.scss";
+import { AuthContext } from "../../context/AuthContext.jsx";
 
 const Signup = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const { updateUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -27,7 +30,9 @@ const Signup = () => {
         password,
       });
 
-      //navigate("/login");
+      updateUser(response.data);
+
+      navigate("/");
     } catch (error) {
       console.log(error);
       setError(error.response.data.error);

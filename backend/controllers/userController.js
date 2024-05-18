@@ -129,7 +129,9 @@ export const saveRecipe = async (req, res) => {
 };
 
 export const profileRecipes = async (req, res) => {
-  const tokenUserId = req.params.userId;
+  const tokenUserId = req.userId;
+  console.log(req.params)
+  console.log(tokenUserId)
 
   try {
     const userRecipes = await prisma.recipe.findMany({
@@ -140,6 +142,7 @@ export const profileRecipes = async (req, res) => {
         reviews: true,
       },
     });
+
 
     
     const saved = await prisma.savedRecipe.findMany({

@@ -39,7 +39,16 @@ export const getRecipe = async (req, res) => {
             avatar: true,
           },
         },
-        reviews: true,
+        reviews: {
+          include: {
+            user: {
+              select: {
+                username: true,
+                avatar: true,
+              },
+            },
+          },
+        },
       },
     });
 
@@ -125,5 +134,56 @@ export const deleteRecipe = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Failed to delete recipe" });
+  }
+};
+
+export const addRecipeReview = async (req, res) => {
+  const { id } = req.params;
+  const body = req.body;
+  const tokenUserId = req.userId;
+
+  console.log(body);
+
+  try {
+    const review = await prisma.review.findUnique({
+      where: {
+        userId_recipeId: {
+          userId: tokenUserId,
+          recipeId: id,
+        },
+      },
+    });
+
+    const recipe = await prisma.recipe.findUnique({
+      where: { id },
+    });
+
+    if (!recipe) {
+      return res.status(404).json({ error: "Recipe not found" });
+    }
+
+    if (recipe.userId === tokenUserId) {
+      return res
+        .status(403)
+        .json({ error: "Can't add review to your own post!" });
+    }
+
+    if (review) {
+      return res
+        .status(409)
+        .json({ error: "Only one review per post from each user! " });
+    } else {
+      const newReview = await prisma.review.create({
+        data: {
+          ...body,
+          userId: tokenUserId,
+          recipeId: recipe.id,
+        },
+      });
+    }
+    res.status(200).json({ message: "New review made successfully! " });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Failed to post recipe review" });
   }
 };

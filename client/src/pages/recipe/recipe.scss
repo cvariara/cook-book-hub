@@ -33,6 +33,14 @@
           width: 100%;
           border: 1px solid black;
         }
+
+        .recipe-user {
+          font-size: 12px;
+
+          span {
+            font-weight: 600;
+          }
+        }
       }
 
       .ingredients {
@@ -199,6 +207,10 @@
     margin-top: 24px;
     border: 8px solid #fcf5f3;
     padding: 24px;
+
+    span {
+      color: rgb(199, 15, 15);
+    }
 
     .rating {
       margin-top: 24px;
