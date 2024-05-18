@@ -13,7 +13,6 @@ const Recipe = () => {
   const [error, setError] = useState("");
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
-  console.log(recipe);
 
   let totalRating = 0;
   let totalReviews = reviews.length;
