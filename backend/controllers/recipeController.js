@@ -16,7 +16,6 @@ export const getRecipes = async (req, res) => {
         reviews: true,
       },
     });
-    //console.log(recipes);
 
     res.status(200).json(recipes);
   } catch (error) {
@@ -141,8 +140,6 @@ export const addRecipeReview = async (req, res) => {
   const { id } = req.params;
   const body = req.body;
   const tokenUserId = req.userId;
-
-  console.log(body);
 
   try {
     const review = await prisma.review.findUnique({
