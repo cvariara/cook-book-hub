@@ -24,13 +24,17 @@ const Recipe = () => {
 
   const averageRating = (totalRating / totalReviews).toFixed(1);
 
-  // Convert createdAt to readable time
-  const date = new Date(recipe.createdAt);
-  const formattedDate = date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const updateDate = (createdAt) => {
+    // Convert createdAt to readable time
+    const date = new Date(createdAt);
+    const formattedDate = date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
+    return formattedDate;
+  };
 
   const handleSave = async () => {
     // After React 19, update to useOptimistic hook
@@ -65,7 +69,6 @@ const Recipe = () => {
       );
 
       window.location.reload();
-
     } catch (error) {
       console.log(error);
       setError(error.response.data.error);
@@ -96,7 +99,7 @@ const Recipe = () => {
               <p>{information.description}</p>
               <p className="recipe-user">
                 By <span>{recipe.user.username}</span> | Updated on{" "}
-                {formattedDate}
+                {updateDate(recipe.createdAt)}
               </p>
               <img src={recipe.img} alt="" />
             </div>
@@ -241,7 +244,7 @@ const Recipe = () => {
                 </div>
                 <div className="feedback-rating">
                   <StarRating rating={review.rating} />
-                  <span className="feedback-created">05/26/2024</span>
+                  <span className="feedback-created">{updateDate(review.createdAt)}</span>
                 </div>
                 <div className="feedback-comment">{review.comment}</div>
               </div>
