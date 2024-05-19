@@ -36,6 +36,11 @@ const Recipe = () => {
   };
 
   const handleSave = async () => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+
     // After React 19, update to useOptimistic hook
     setSaved((prev) => !prev);
     if (!currentUser) {
@@ -78,8 +83,14 @@ const Recipe = () => {
     e.preventDefault();
 
     window.location.reload();
+  };
 
-    console.log("cancelled!");
+  const showForm = () => {
+    if (!currentUser) return false;
+    if (currentUser.id === recipe.userId) return false;
+    if (reviews.some((review) => review.userId === currentUser.id))
+      return false;
+    return true;
   };
 
   return (
@@ -182,48 +193,47 @@ const Recipe = () => {
       </div>
       <div className="reviews" id="reviews">
         <h1>Reviews</h1>
-        {currentUser.id !== recipe.userId &&
-          !reviews.some((review) => review.userId === currentUser.id) && (
-            <div className="leave-review">
-              <h3>{recipe.name}</h3>
-              <form onSubmit={handleSubmit}>
-                <div className="rating">
-                  <h4>Your Rating</h4>
-                  <div className="star-rating">
-                    <input type="radio" id="star1" name="rating" value="5" />
-                    <label htmlFor="star1"></label>
-                    <input type="radio" id="star2" name="rating" value="4" />
-                    <label htmlFor="star2"></label>
-                    <input type="radio" id="star3" name="rating" value="3" />
-                    <label htmlFor="star3"></label>
-                    <input type="radio" id="star4" name="rating" value="2" />
-                    <label htmlFor="star4"></label>
-                    <input type="radio" id="star5" name="rating" value="1" />
-                    <label htmlFor="star5"></label>
+        {showForm() && (
+          <div className="leave-review">
+            <h3>{recipe.name}</h3>
+            <form onSubmit={handleSubmit}>
+              <div className="rating">
+                <h4>Your Rating</h4>
+                <div className="star-rating">
+                  <input type="radio" id="star1" name="rating" value="5" />
+                  <label htmlFor="star1"></label>
+                  <input type="radio" id="star2" name="rating" value="4" />
+                  <label htmlFor="star2"></label>
+                  <input type="radio" id="star3" name="rating" value="3" />
+                  <label htmlFor="star3"></label>
+                  <input type="radio" id="star4" name="rating" value="2" />
+                  <label htmlFor="star4"></label>
+                  <input type="radio" id="star5" name="rating" value="1" />
+                  <label htmlFor="star5"></label>
+                </div>
+              </div>
+              <div className="review">
+                <div className="review-form">
+                  <label htmlFor="review">
+                    <h4>Your Review</h4>
+                  </label>
+                  <textarea
+                    name="review"
+                    id="review"
+                    placeholder="What did you think about this recipe?"
+                  ></textarea>
+                  <div className="action-buttons">
+                    <button className="cancel" onClick={handleCancel}>
+                      Cancel
+                    </button>
+                    <button className="submit">Submit</button>
                   </div>
                 </div>
-                <div className="review">
-                  <div className="review-form">
-                    <label htmlFor="review">
-                      <h4>Your Review</h4>
-                    </label>
-                    <textarea
-                      name="review"
-                      id="review"
-                      placeholder="What did you think about this recipe?"
-                    ></textarea>
-                    <div className="action-buttons">
-                      <button className="cancel" onClick={handleCancel}>
-                        Cancel
-                      </button>
-                      <button className="submit">Submit</button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-              {error && <span className="error">{error}</span>}
-            </div>
-          )}
+              </div>
+            </form>
+            {error && <span className="error">{error}</span>}
+          </div>
+        )}
         <div className="comments">
           <div className="review-data">
             <span>{totalReviews} Reviews</span>
@@ -243,7 +253,9 @@ const Recipe = () => {
                 </div>
                 <div className="feedback-rating">
                   <StarRating rating={review.rating} />
-                  <span className="feedback-created">{updateDate(review.createdAt)}</span>
+                  <span className="feedback-created">
+                    {updateDate(review.createdAt)}
+                  </span>
                 </div>
                 <div className="feedback-comment">{review.comment}</div>
               </div>

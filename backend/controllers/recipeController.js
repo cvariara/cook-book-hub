@@ -51,32 +51,33 @@ export const getRecipe = async (req, res) => {
       },
     });
 
-    let userId;
+    if (!recipe) {
+      return res.status(404).json({ error: "Recipe not found" });
+    }
 
     const token = req.cookies?.token;
 
-    if (!token) {
-      userId = null;
-    } else {
+    if (token) {
       jwt.verify(token, process.env.JWT_SECRET, async (error, payload) => {
-        if (error) {
-          userId = null;
+        if (!error) {
+          const saved = await prisma.savedRecipe.findUnique({
+            where: {
+              userId_recipeId: {
+                recipeId: id,
+                userId: payload.id,
+              },
+            },
+          });
+          return res
+            .status(200)
+            .json({ ...recipe, isSaved: saved ? true : false });
         } else {
-          userId = payload.id;
+          return res.status(200).json({ ...recipe, isSaved: false });
         }
       });
+    } else {
+      res.status(200).json({ ...recipe, isSaved: false });
     }
-
-    const saved = await prisma.savedRecipe.findUnique({
-      where: {
-        userId_recipeId: {
-          recipeId: id,
-          userId,
-        },
-      },
-    });
-
-    res.status(200).json({ ...recipe, isSaved: saved ? true : false });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Failed to get recipe" });
