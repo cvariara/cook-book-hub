@@ -1,4 +1,4 @@
-# Recipe Website
+# Cook-Book-Hub
 
 ## Overview
 This is a web application for sharing and discovering recipes. Users can create an account, log in, and save their favorite recipes. They can also upload their own recipes and leave reviews on recipes shared by other users.
